@@ -42,14 +42,10 @@ export default function Home() {
       {/* Quick Stats */}
       <section className="py-12 bg-white dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-center">
             <div>
               <div className="text-3xl font-bold text-brand-primary-600 dark:text-brand-primary-400">12</div>
               <div className="text-gray-600 dark:text-gray-400">Clubes Afiliados</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-brand-accent-600 dark:text-brand-accent-400">1188</div>
-              <div className="text-gray-600 dark:text-gray-400">Jugadores</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-brand-info-600 dark:text-brand-info-400">25</div>
