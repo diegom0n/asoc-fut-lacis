@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Navbar } from '@/components/navbar'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -7,112 +8,134 @@ const clubs = [
   {
     id: 1,
     name: 'América',
-    founded: 9999,
+    founded: 2025,
     category: 'Primera División',
     players: 99,
     location: 'La Cisterna',
     achievements: 99,
-    colors: 'bg-pink-500',
+    colors: 'bg-white border-brand-neutral-900',
+    logo: '/logos/clubs/américa.jpg',
+    member: 2025,
   },
   {
     id: 2,
     name: 'C.D American',
-    founded: 9999,
+    founded: 2025,
     category: 'Primera División',
     players: 99,
     location: 'La Cisterna',
     achievements: 99,
-    colors: 'bg-green-500',
+    colors: 'bg-brand-neutral-900',
+    logo: '/logos/clubs/american.jpg',
+    member: 2025,
   },
   {
     id: 3,
     name: 'Carlos Muñoz',
-    founded: 9999,
+    founded: 2025,
     category: 'Primera División',
     players: 99,
     location: 'La Cisterna',
     achievements: 99,
-    colors: 'bg-orange-500',
+    colors: 'bg-brand-neutral-100',
+    logo: '/logos/clubs/carlos muñoz.jpg',
+    member: 2025,
   },
   {
     id: 4,
     name: 'Cachavacha',
-    founded: 9999,
+    founded: 2025,
     category: 'Primera División',
     players: 99,
     location: 'La Cisterna',
     achievements: 99,
     colors: 'bg-blue-500',
+    logo: '/logos/clubs/cachavacha.jpg',
+    member: 2025,
   },
   {
     id: 5,
     name: 'Cultural Renacer',
-    founded: 9999,
+    founded: 2025,
     category: 'Primera División',
     players: 99,
     location: 'La Cisterna',
     achievements: 99,
-    colors: 'bg-red-500',
+    colors: 'bg-brand-neutral-900',
+    logo: '/logos/clubs/renacer.jpg',
+    member: 2025,
   },
   {
     id: 6,
     name: 'Cultural Uruguay',
-    founded: 9999,
+    founded: '1 de enero de 1945',
     category: 'Primera División',
     players: 99,
     location: 'La Cisterna',
     achievements: 99,
     colors: 'bg-cyan-500',
+    logo: '/logos/clubs/uruguay.png',
+    member: 2025,
   },
   {
     id: 7,
     name: 'FC La Burgueño',
-    founded: 9999,
+    founded: 2025,
     category: 'Primera División',
     players: 99,
     location: 'La Cisterna',
     achievements: 99,
-    colors: 'bg-yellow-500',
+    colors: 'bg-brand-neutral-900',
+    logo: '/logos/clubs/fc la burgueño.jpg',
+    member: 2025,
   },
   {
     id: 8,
     name: 'Gremio',
-    founded: 9999,
+    founded: 2025,
     category: 'Primera División',
     players: 99,
     location: 'La Cisterna',
     achievements: 99,
-    colors: 'bg-purple-500',
+    colors: 'bg-brand-neutral-900',
+    logo: '/logos/clubs/gremio.jpg',
+    member: 2025,
   },
   {
     id: 9,
     name: 'Gremio 2010',
-    founded: 9999,
+    founded: 2025,
     category: 'Primera División',
     players: 99,
     location: 'La Cisterna',
     achievements: 99,
-    colors: 'bg-rose-500',
+    colors: 'bg-brand-neutral-900',
+    logo: '/logos/clubs/gremio 2010.jpg',
+    member: 2025,
   },
   {
     id: 10,
     name: 'Juventud Brasil',
-    founded: 9999,
+    founded: 2025,
     category: 'Primera División',
     players: 99,
     location: 'La Cisterna',
     achievements: 99,
-    colors: 'bg-teal-500',
+    colors: 'bg-brand-secondary-400',
+    logo: '/logos/clubs/juventud brasil.jpg',
+    member: 2025,
   },
   {
     id: 11,
     name: 'Real Lo Espejo',
-    founded: 9999,
+    founded: 2025,
     category: 'Primera División',
     players: 99,
     location: 'La Cisterna',
     achievements: 99,
-    colors: 'bg-lime-500',
+    colors: 'bg-brand-neutral-900',
+    logo: '/logos/clubs/real lo espejo.jpg',
+    member: 2025,
   },
   {
     id: 12,
@@ -122,7 +145,9 @@ const clubs = [
     players: 99,
     location: 'La Cisterna',
     achievements: 99,
-    colors: 'bg-indigo-500',
+    colors: 'bg-brand-neutral-900',
+    logo: '/logos/clubs/unión salas.jpg',
+    member: 2025,
   },
 ]
 
@@ -170,10 +195,10 @@ export default function ClubesPage() {
           <Card>
             <CardContent className="p-6 text-center">
               <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">
-                {clubs.filter(club => club.category === 'Primera División').length}
+                5
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400">
-                Primera División
+                Categorías
               </div>
             </CardContent>
           </Card>
@@ -197,19 +222,22 @@ export default function ClubesPage() {
               <CardHeader className="relative">
                 <div className="flex items-center space-x-4">
                   <div className={`w-16 h-16 ${club.colors} rounded-full flex items-center justify-center relative overflow-hidden`}>
-                    {/* Placeholder for club logo - replace with actual logo when available */}
-                    <div className="w-full h-full flex items-center justify-center">
-                      <span className="text-white font-bold text-xl">
-                        {club.name.split(' ').map(word => word[0]).join('').slice(0, 2)}
-                      </span>
-                    </div>
-                    {/* Future logo implementation:
-                    <img 
-                      src={`/logos/clubs/${club.name.toLowerCase().replace(/\s+/g, '-')}.png`}
-                      alt={`${club.name} logo`}
-                      className="w-full h-full object-contain"
-                    />
-                    */}
+                    {club.logo ? (
+                      <Image
+                        src={club.logo}
+                        alt={`${club.name} logo`}
+                        fill
+                        sizes="64px"
+                        className="object-contain"
+                        priority
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <span className="text-white font-bold text-xl">
+                          {club.name.split(' ').map(word => word[0]).join('').slice(0, 2)}
+                        </span>
+                      </div>
+                    )}
                   </div>
                   <div className="flex-1">
                     <CardTitle className="text-lg leading-tight">
@@ -245,7 +273,7 @@ export default function ClubesPage() {
 
                 <div className="pt-3 border-t border-gray-200 dark:border-gray-700">
                   <div className="text-xs text-gray-500 dark:text-gray-400">
-                    Miembro desde {club.founded}
+                    Miembro desde {club.member}
                   </div>
                 </div>
               </CardContent>

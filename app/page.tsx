@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Trophy, Users, Calendar, Megaphone, ArrowRight, Star } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Home() {
   return (
@@ -26,7 +27,11 @@ export default function Home() {
                 Ver Próximos Partidos
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-brand-primary-600">
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-white text-brand-primary-600 hover:bg-brand-primary-600 hover:text-white dark:border-brand-neutral-900 dark:text-white dark:hover:bg-brand-neutral-400 dark:hover:text-brand-neutral-900"
+              >
                 Conocer Clubes
               </Button>
             </div>
@@ -72,7 +77,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Link href="/clubes">
-              <Card className="hover:shadow-lg transition-shadow cursor-pointer group">
+              <Card className="group transform transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-xl cursor-pointer">
                 <CardHeader className="text-center">
                   <div className="mx-auto bg-brand-primary-100 dark:bg-brand-primary-900 p-3 rounded-full w-16 h-16 flex items-center justify-center group-hover:bg-brand-primary-200 dark:group-hover:bg-brand-primary-800 transition-colors">
                     <Users className="h-8 w-8 text-brand-primary-600 dark:text-brand-primary-400" />
@@ -88,7 +93,7 @@ export default function Home() {
             </Link>
 
             <Link href="/noticias">
-              <Card className="hover:shadow-lg transition-shadow cursor-pointer group">
+              <Card className="group transform transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-xl cursor-pointer">
                 <CardHeader className="text-center">
                   <div className="mx-auto bg-brand-accent-100 dark:bg-brand-accent-900 p-3 rounded-full w-16 h-16 flex items-center justify-center group-hover:bg-brand-accent-200 dark:group-hover:bg-brand-accent-800 transition-colors">
                     <Star className="h-8 w-8 text-brand-accent-600 dark:text-brand-accent-400" />
@@ -104,7 +109,7 @@ export default function Home() {
             </Link>
 
             <Link href="/partidos">
-              <Card className="hover:shadow-lg transition-shadow cursor-pointer group">
+              <Card className="group transform transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-xl cursor-pointer">
                 <CardHeader className="text-center">
                   <div className="mx-auto bg-brand-info-100 dark:bg-brand-info-900 p-3 rounded-full w-16 h-16 flex items-center justify-center group-hover:bg-brand-info-200 dark:group-hover:bg-brand-info-800 transition-colors">
                     <Calendar className="h-8 w-8 text-brand-info-600 dark:text-brand-info-400" />
@@ -120,7 +125,7 @@ export default function Home() {
             </Link>
 
             <Link href="/citaciones">
-              <Card className="hover:shadow-lg transition-shadow cursor-pointer group">
+              <Card className="group transform transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-xl cursor-pointer">
                 <CardHeader className="text-center">
                   <div className="mx-auto bg-brand-warning-100 dark:bg-brand-warning-900 p-3 rounded-full w-16 h-16 flex items-center justify-center group-hover:bg-brand-warning-200 dark:group-hover:bg-brand-warning-800 transition-colors">
                     <Megaphone className="h-8 w-8 text-brand-warning-600 dark:text-brand-warning-400" />
@@ -155,11 +160,11 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[1, 2, 3].map((i) => (
-              <Card key={i} className="hover:shadow-lg transition-shadow">
+              <Card key={i} className="group transform transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-xl cursor-pointer">
                 <div className="aspect-video bg-gradient-to-r from-blue-400 to-blue-600 rounded-t-lg"></div>
                 <CardHeader>
                   <CardTitle className="text-lg">
-                    Gran victoria del Club Deportivo Los Leones
+                    Gran victoria del Cultural Uruguay
                   </CardTitle>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     Hace 2 días
@@ -167,7 +172,7 @@ export default function Home() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-600 dark:text-gray-400">
-                    El club América logró una importante victoria por 3-1 en el último partido del campeonato...
+                    El club Uruguay logró una importante victoria por 3-1 en el último partido del campeonato...
                   </p>
                 </CardContent>
               </Card>
@@ -175,24 +180,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="flex justify-center items-center space-x-2 mb-4">
-              <Trophy className="h-8 w-8 text-brand-secondary-400" />
-              <h3 className="text-2xl font-bold">Asociación Fútbol La Cisterna</h3>
-            </div>
-            <p className="text-gray-400 mb-6">
-              Promoviendo el fútbol y los valores deportivos en nuestra comunidad
-            </p>
-            <div className="text-sm text-gray-500">
-              © 2024 Asociación Fútbol La Cisterna. Todos los derechos reservados.
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }

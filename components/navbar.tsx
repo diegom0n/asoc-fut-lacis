@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { Menu, X, Sun, Moon, Trophy } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import Image from 'next/image'
 
 const navItems = [
   { href: '/', label: 'Inicio' },
@@ -23,31 +24,32 @@ export function Navbar() {
   }
 
   return (
-    <nav className="bg-white dark:bg-gray-900 shadow-lg border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+  <nav className="bg-white dark:bg-gray-900 shadow-lg border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
-            <div className="bg-brand-primary-600 p-2 rounded-lg group-hover:bg-brand-primary-700 transition-colors">
-              {/* Placeholder for official logo - replace with actual logo when available */}
-              <Trophy className="h-6 w-6 text-white" />
-              {/* Future logo implementation:
-              <img 
-                src="/logo-oficial-afc-la-cisterna.png"
+          <div className="relative overflow-visible">
+            <div className="w-16 h-16 relative transition-transform duration-300 ease-in-out group-hover:scale-150 origin-center group-hover:translate-x-2">
+              <Image
+                src="/logos/logo asoc-fut-lacis.png"
                 alt="AFC La Cisterna Logo"
-                className="h-6 w-6 object-contain"
+                fill
+                className="object-contain"
               />
-              */}
             </div>
-            <div className="hidden sm:block">
-              <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-                AFC La Cisterna
-              </h1>
-              <p className="text-xs text-gray-600 dark:text-gray-400">
-                Asociación Fútbol
-              </p>
-            </div>
-          </Link>
+          </div>
+          <div className="hidden sm:block">
+            <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+              Asociación de Fútbol
+            </h1>
+            <p className="text-xs text-gray-600 dark:text-gray-400">
+              La Cisterna
+            </p>
+          </div>
+        </Link>
+
+
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">

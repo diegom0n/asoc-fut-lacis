@@ -136,7 +136,7 @@ export default function CitacionesPage() {
           </h2>
           <div className="space-y-4">
             {announcements.map((announcement) => (
-              <Alert key={announcement.id} className={announcement.type === 'warning' ? 'border-yellow-200 bg-yellow-50' : 'border-blue-200 bg-blue-50'}>
+              <Alert key={announcement.id} className={announcement.type === 'warning' ? 'border-yellow-200 bg-yellow-50 dark:border-yellow-500 dark:bg-yellow-900' : 'border-blue-200 bg-blue-50 dark:border-blue-600 dark:bg-blue-900'}>
                 {announcement.type === 'warning' ? 
                   <AlertCircle className="h-4 w-4" /> : 
                   <Megaphone className="h-4 w-4" />
@@ -147,7 +147,7 @@ export default function CitacionesPage() {
                       <h3 className="font-semibold mb-1">{announcement.title}</h3>
                       <p>{announcement.content}</p>
                     </div>
-                    <span className="text-sm text-gray-500 ml-4">
+                    <span className="text-sm text-gray-500 ml-4 dark:text-white">
                       {new Date(announcement.date).toLocaleDateString('es-CL')}
                     </span>
                   </div>
