@@ -1,0 +1,147 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light theme - AFC La Cisterna brand colors */
+    --background: 0 0% 100%;
+    --foreground: 222 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 84% 4.9%;
+    --primary: 221 83% 53%; /* Brand blue */
+    --primary-foreground: 210 40% 98%;
+    --secondary: 45 93% 47%; /* Brand yellow */
+    --secondary-foreground: 45 100% 9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 142 76% 36%; /* Success green */
+    --accent-foreground: 355 100% 97%;
+    --destructive: 0 84% 60%; /* Error red */
+    --destructive-foreground: 210 40% 98%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 221 83% 53%;
+    --chart-1: 221 83% 53%; /* Primary blue */
+    --chart-2: 45 93% 47%; /* Secondary yellow */
+    --chart-3: 142 76% 36%; /* Accent green */
+    --chart-4: 0 84% 60%; /* Danger red */
+    --chart-5: 25 95% 53%; /* Warning orange */
+    --radius: 0.5rem;
+    
+    /* Custom brand variables */
+    --brand-primary: 221 83% 53%;
+    --brand-secondary: 45 93% 47%;
+    --brand-accent: 142 76% 36%;
+    --brand-danger: 0 84% 60%;
+    --brand-warning: 25 95% 53%;
+    --brand-info: 199 89% 48%;
+  }
+  
+  .dark {
+    /* Dark theme - AFC La Cisterna brand colors */
+    --background: 222 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217 91% 60%; /* Lighter brand blue for dark mode */
+    --primary-foreground: 222 84% 4.9%;
+    --secondary: 45 93% 47%; /* Keep yellow consistent */
+    --secondary-foreground: 45 100% 9%;
+    --muted: 217 32% 17%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 142 76% 36%; /* Keep green consistent */
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%; /* Keep red consistent */
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 32% 17%;
+    --input: 217 32% 17%;
+    --ring: 217 91% 60%;
+    --chart-1: 217 91% 60%; /* Primary blue (lighter) */
+    --chart-2: 45 93% 47%; /* Secondary yellow */
+    --chart-3: 142 76% 36%; /* Accent green */
+    --chart-4: 0 84% 60%; /* Danger red */
+    --chart-5: 25 95% 53%; /* Warning orange */
+    
+    /* Custom brand variables for dark mode */
+    --brand-primary: 217 91% 60%;
+    --brand-secondary: 45 93% 47%;
+    --brand-accent: 142 76% 36%;
+    --brand-danger: 0 84% 60%;
+    --brand-warning: 25 95% 53%;
+    --brand-info: 199 89% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom utility classes for brand colors */
+@layer utilities {
+  .text-brand-primary {
+    color: hsl(var(--brand-primary));
+  }
+  .text-brand-secondary {
+    color: hsl(var(--brand-secondary));
+  }
+  .text-brand-accent {
+    color: hsl(var(--brand-accent));
+  }
+  .text-brand-danger {
+    color: hsl(var(--brand-danger));
+  }
+  .text-brand-warning {
+    color: hsl(var(--brand-warning));
+  }
+  .text-brand-info {
+    color: hsl(var(--brand-info));
+  }
+  
+  .bg-brand-primary {
+    background-color: hsl(var(--brand-primary));
+  }
+  .bg-brand-secondary {
+    background-color: hsl(var(--brand-secondary));
+  }
+  .bg-brand-accent {
+    background-color: hsl(var(--brand-accent));
+  }
+  .bg-brand-danger {
+    background-color: hsl(var(--brand-danger));
+  }
+  .bg-brand-warning {
+    background-color: hsl(var(--brand-warning));
+  }
+  .bg-brand-info {
+    background-color: hsl(var(--brand-info));
+  }
+  
+  .border-brand-primary {
+    border-color: hsl(var(--brand-primary));
+  }
+  .border-brand-secondary {
+    border-color: hsl(var(--brand-secondary));
+  }
+  .border-brand-accent {
+    border-color: hsl(var(--brand-accent));
+  }
+  .border-brand-danger {
+    border-color: hsl(var(--brand-danger));
+  }
+  .border-brand-warning {
+    border-color: hsl(var(--brand-warning));
+  }
+  .border-brand-info {
+    border-color: hsl(var(--brand-info));
+  }
+}
