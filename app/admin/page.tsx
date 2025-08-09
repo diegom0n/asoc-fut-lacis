@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Navbar } from '@/components/navbar'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -12,10 +12,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import { Calendar, Plus, Edit, Trash2, Users, FileText, Trophy, Megaphone } from 'lucide-react'
 import { Alert, AlertDescription } from '@/components/ui/alert'
+import { matchService, newsService, citationService } from '@/lib/supabase-admin'
 
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState('matches')
   const [showSuccess, setShowSuccess] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
 
   // Match Form State
   const [matchForm, setMatchForm] = useState({
@@ -52,62 +55,147 @@ export default function AdminPage() {
     maxAttendees: 25
   })
 
+  // Clear messages after 3 seconds
+  useEffect(() => {
+    if (showSuccess || error) {
+      const timer = setTimeout(() => {
+        setShowSuccess(false)
+        setError('')
+      }, 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [showSuccess, error])
+
   const clubs = [
     'América', 'C.D American', 'Carlos Muñoz', 'Cachavacha',
     'Cultural Renacer', 'Cultural Uruguay', 'FC La Burgueño',
     'Gremio', 'Gremio 2010', 'Juventud Brasil', 'Real Lo Espejo', 'Unión Salas'
   ]
 
-  const handleMatchSubmit = (e: React.FormEvent) => {
+  const handleMatchSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Here you would typically send the data to your backend/Supabase
-    console.log('Match submitted:', matchForm)
-    setShowSuccess(true)
-    setTimeout(() => setShowSuccess(false), 3000)
-    // Reset form
-    setMatchForm({
-      homeTeam: '',
-      awayTeam: '',
-      date: '',
-      time: '',
-      venue: 'Estadio Municipal La Cisterna',
-      division: 'Primera División',
-      matchday: '',
-      status: 'upcoming'
-    })
+    setIsLoading(true)
+    setError('')
+
+    try {
+      const matchData = {
+        home_team: matchForm.homeTeam,
+        away_team: matchForm.awayTeam,
+        date: matchForm.date,
+        time: matchForm.time || null,
+        venue: matchForm.venue,
+        division: matchForm.division,
+        matchday: matchForm.matchday || null,
+        status: matchForm.status as 'upcoming' | 'completed' | 'live'
+      }
+
+      const result = await matchService.create(matchData)
+      
+      if (result) {
+        setShowSuccess(true)
+        // Reset form
+        setMatchForm({
+          homeTeam: '',
+          awayTeam: '',
+          date: '',
+          time: '',
+          venue: 'Estadio Municipal La Cisterna',
+          division: 'Primera División',
+          matchday: '',
+          status: 'upcoming'
+        })
+      } else {
+        setError('Error al crear el partido. Inténtalo de nuevo.')
+      }
+    } catch (err) {
+      setError('Error al conectar con la base de datos.')
+      console.error('Error creating match:', err)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
-  const handleNewsSubmit = (e: React.FormEvent) => {
+  const handleNewsSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('News submitted:', newsForm)
-    setShowSuccess(true)
-    setTimeout(() => setShowSuccess(false), 3000)
-    setNewsForm({
-      title: '',
-      summary: '',
-      content: '',
-      category: 'Resultados',
-      author: '',
-      featured: false
-    })
+    setIsLoading(true)
+    setError('')
+
+    try {
+      const newsData = {
+        title: newsForm.title,
+        summary: newsForm.summary,
+        content: newsForm.content || '',
+        category: newsForm.category,
+        author: newsForm.author,
+        featured: newsForm.featured
+      }
+
+      const result = await newsService.create(newsData)
+      
+      if (result) {
+        setShowSuccess(true)
+        setNewsForm({
+          title: '',
+          summary: '',
+          content: '',
+          category: 'Resultados',
+          author: '',
+          featured: false
+        })
+      } else {
+        setError('Error al crear la noticia. Inténtalo de nuevo.')
+      }
+    } catch (err) {
+      setError('Error al conectar con la base de datos.')
+      console.error('Error creating news:', err)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
-  const handleCitationSubmit = (e: React.FormEvent) => {
+  const handleCitationSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Citation submitted:', citationForm)
-    setShowSuccess(true)
-    setTimeout(() => setShowSuccess(false), 3000)
-    setCitationForm({
-      type: 'Entrenamiento',
-      title: '',
-      description: '',
-      club: '',
-      date: '',
-      time: '',
-      venue: '',
-      priority: 'normal',
-      maxAttendees: 25
-    })
+    setIsLoading(true)
+    setError('')
+
+    try {
+      const citationData = {
+        type: citationForm.type,
+        title: citationForm.title,
+        description: citationForm.description,
+        club: citationForm.club,
+        date: citationForm.date,
+        time: citationForm.time,
+        venue: citationForm.venue,
+        status: 'Activa',
+        priority: citationForm.priority,
+        max_attendees: citationForm.maxAttendees
+      }
+
+      const result = await citationService.create(citationData)
+      
+      if (result) {
+        setShowSuccess(true)
+        setCitationForm({
+          type: 'Entrenamiento',
+          title: '',
+          description: '',
+          club: '',
+          date: '',
+          time: '',
+          venue: '',
+          priority: 'normal',
+          maxAttendees: 25
+        })
+      } else {
+        setError('Error al crear la citación. Inténtalo de nuevo.')
+      }
+    } catch (err) {
+      setError('Error al conectar con la base de datos.')
+      console.error('Error creating citation:', err)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -130,6 +218,15 @@ export default function AdminPage() {
           <Alert className="mb-6 border-green-200 bg-green-50 dark:border-green-500 dark:bg-green-900">
             <AlertDescription className="text-green-800 dark:text-green-200">
               ¡Contenido guardado exitosamente!
+            </AlertDescription>
+          </Alert>
+        )}
+
+        {/* Error Alert */}
+        {error && (
+          <Alert className="mb-6 border-red-200 bg-red-50 dark:border-red-500 dark:bg-red-900">
+            <AlertDescription className="text-red-800 dark:text-red-200">
+              {error}
             </AlertDescription>
           </Alert>
         )}
@@ -261,9 +358,9 @@ export default function AdminPage() {
                     </div>
                   </div>
 
-                  <Button type="submit" className="w-full">
+                  <Button type="submit" className="w-full" disabled={isLoading}>
                     <Plus className="h-4 w-4 mr-2" />
-                    Crear Partido
+                    {isLoading ? 'Creando...' : 'Crear Partido'}
                   </Button>
                 </form>
               </CardContent>
@@ -354,9 +451,9 @@ export default function AdminPage() {
                     <Label htmlFor="featured">Marcar como noticia destacada</Label>
                   </div>
 
-                  <Button type="submit" className="w-full">
+                  <Button type="submit" className="w-full" disabled={isLoading}>
                     <Plus className="h-4 w-4 mr-2" />
-                    Publicar Noticia
+                    {isLoading ? 'Publicando...' : 'Publicar Noticia'}
                   </Button>
                 </form>
               </CardContent>
@@ -490,9 +587,9 @@ export default function AdminPage() {
                     </div>
                   </div>
 
-                  <Button type="submit" className="w-full">
+                  <Button type="submit" className="w-full" disabled={isLoading}>
                     <Plus className="h-4 w-4 mr-2" />
-                    Crear Citación
+                    {isLoading ? 'Creando...' : 'Crear Citación'}
                   </Button>
                 </form>
               </CardContent>

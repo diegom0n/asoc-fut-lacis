@@ -1,80 +1,54 @@
 import { Navbar } from '@/components/navbar'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Calendar, User, Eye, MessageCircle } from 'lucide-react'
-
-const news = [
-  {
-    id: 1,
-    title: 'Gran victoria de América en el clásico local',
-    summary: 'El club América se impuso 3-1 ante C.D American en un emocionante encuentro que se jugó en el estadio municipal.',
-    category: 'Resultados',
-    author: 'Carlos Mendoza',
-    date: '2024-01-15',
-    views: 245,
-    comments: 12,
-    featured: true,
-  },
-  {
-    id: 2,
-    title: 'Nuevo sistema de inscripciones online disponible',
-    summary: 'La asociación implementó un nuevo sistema digital para facilitar las inscripciones de jugadores y la gestión de documentos.',
-    category: 'Administración',
-    author: 'María González',
-    date: '2024-01-12',
-    views: 189,
-    comments: 8,
-    featured: false,
-  },
-  {
-    id: 3,
-    title: 'Inauguración de nueva cancha en La Cisterna Norte',
-    summary: 'Se inauguró oficialmente la nueva cancha de césped sintético que beneficiará a todos los clubes de la zona norte de la comuna.',
-    category: 'Infraestructura',
-    author: 'Roberto Silva',
-    date: '2024-01-10',
-    views: 312,
-    comments: 25,
-    featured: true,
-  },
-  {
-    id: 4,
-    title: 'Seminario de capacitación para entrenadores',
-    summary: 'Se realizó exitosamente el primer seminario del año con la participación de reconocidos técnicos de fútbol nacional.',
-    category: 'Capacitación',
-    author: 'Ana Rodríguez',
-    date: '2024-01-08',
-    views: 156,
-    comments: 6,
-    featured: false,
-  },
-  {
-    id: 5,
-    title: 'Gremio 2010 mantiene su posición en Primera División',
-    summary: 'El club confirmó su permanencia en la máxima categoría después de una temporada de consolidación.',
-    category: 'Resultados',
-    author: 'Luis Morales',
-    date: '2024-01-05',
-    views: 428,
-    comments: 34,
-    featured: true,
-  },
-  {
-    id: 6,
-    title: 'Campaña solidaria: "Fútbol que une"',
-    summary: 'Lanzamos una nueva campaña para recolectar implementos deportivos destinados a jóvenes de sectores vulnerables.',
-    category: 'Social',
-    author: 'Patricia López',
-    date: '2024-01-03',
-    views: 203,
-    comments: 15,
-    featured: false,
-  },
-]
+import { newsService, type News } from '@/lib/supabase-admin'
 
 const categories = ['Todas', 'Resultados', 'Administración', 'Infraestructura', 'Capacitación', 'Social']
 
 export default function NoticiasPage() {
+  const [news, setNews] = useState<News[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('Todas')
+
+  useEffect(() => {
+    loadNews()
+  }, [])
+
+  const loadNews = async () => {
+    try {
+      setLoading(true)
+      const newsData = await newsService.getAll()
+      setNews(newsData)
+    } catch (err) {
+      setError('Error al cargar las noticias')
+      console.error('Error loading news:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const filteredNews = selectedCategory === 'Todas' 
+    ? news 
+    : news.filter(article => article.category === selectedCategory)
+
+  const featuredNews = news.filter(article => article.featured)
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <Navbar />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center">
+            <div className="text-xl text-gray-600 dark:text-gray-400">Cargando noticias...</div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Navbar />
@@ -91,14 +65,28 @@ export default function NoticiasPage() {
           </p>
         </div>
 
+        {/* Error Message */}
+        {error && (
+          <div className="mb-8 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+            <p className="text-red-800 dark:text-red-200">{error}</p>
+            <button 
+              onClick={loadNews}
+              className="mt-2 text-red-600 dark:text-red-400 underline hover:no-underline"
+            >
+              Intentar de nuevo
+            </button>
+          </div>
+        )}
+
         {/* Category Filter */}
         <div className="mb-8">
           <div className="flex flex-wrap gap-2 justify-center">
             {categories.map((category) => (
               <Badge
                 key={category}
-                variant={category === 'Todas' ? 'default' : 'outline'}
+                variant={category === selectedCategory ? 'default' : 'outline'}
                 className="cursor-pointer hover:bg-blue-600 hover:text-white transition-colors"
+                onClick={() => setSelectedCategory(category)}
               >
                 {category}
               </Badge>
@@ -107,12 +95,13 @@ export default function NoticiasPage() {
         </div>
 
         {/* Featured News */}
+        {featuredNews.length > 0 && (
         <div className="mb-12">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
             Noticias Destacadas
           </h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {news.filter(article => article.featured).slice(0, 2).map((article) => (
+            {featuredNews.slice(0, 2).map((article) => (
               <Card key={article.id} className="hover:shadow-lg transition-shadow cursor-pointer group overflow-hidden">
                 <div className="aspect-video bg-gradient-to-r from-blue-500 to-blue-700"></div>
                 <CardHeader>
@@ -157,14 +146,25 @@ export default function NoticiasPage() {
             ))}
           </div>
         </div>
+        )}
 
         {/* All News */}
         <div>
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-            Todas las Noticias
+            {selectedCategory === 'Todas' ? 'Todas las Noticias' : `Noticias - ${selectedCategory}`}
           </h2>
+          {filteredNews.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-gray-500 dark:text-gray-400">
+                {selectedCategory === 'Todas' 
+                  ? 'No hay noticias disponibles.' 
+                  : `No hay noticias en la categoría "${selectedCategory}".`
+                }
+              </p>
+            </div>
+          ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {news.map((article) => (
+            {filteredNews.map((article) => (
               <Card key={article.id} className="hover:shadow-lg transition-shadow cursor-pointer group">
                 <div className="aspect-video bg-gradient-to-r from-gray-400 to-gray-600"></div>
                 <CardHeader>
@@ -205,15 +205,19 @@ export default function NoticiasPage() {
               </Card>
             ))}
           </div>
+          )}
         </div>
 
         {/* Load More */}
+        {filteredNews.length > 0 && (
         <div className="text-center mt-12">
           <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">
             Cargar Más Noticias
           </button>
         </div>
+        )}
       </div>
     </div>
   )
+'use client'
 }

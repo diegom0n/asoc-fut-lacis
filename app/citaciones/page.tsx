@@ -1,81 +1,11 @@
 import { Navbar } from '@/components/navbar'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Calendar, Clock, MapPin, Users, Megaphone, AlertCircle, CheckCircle } from 'lucide-react'
+import { citationService, type Citation } from '@/lib/supabase-admin'
 
-const citaciones = [
-  {
-    id: 1,
-    type: 'Entrenamiento',
-    title: 'Entrenamiento Primera División - América',
-    description: 'Entrenamiento técnico-táctico preparatorio para el próximo partido ante C.D American.',
-    club: 'América',
-    date: '2024-01-18',
-    time: '19:00',
-    venue: 'Cancha Municipal Norte',
-    status: 'Activa',
-    priority: 'normal',
-    attendees: 18,
-    maxAttendees: 25,
-  },
-  {
-    id: 2,
-    type: 'Convocatoria',
-    title: 'Convocatoria para el Clásico Local',
-    description: 'Convocatoria oficial para el partido América vs C.D American del próximo sábado.',
-    club: 'América',
-    date: '2024-01-20',
-    time: '14:00',
-    venue: 'Estadio Municipal La Cisterna',
-    status: 'Urgente',
-    priority: 'high',
-    attendees: 20,
-    maxAttendees: 23,
-  },
-  {
-    id: 3,
-    type: 'Reunión',
-    title: 'Reunión Técnica - Análisis Tactical',
-    description: 'Reunión para análisis de video del último partido y preparación estratégica.',
-    club: 'Carlos Muñoz',
-    date: '2024-01-17',
-    time: '20:30',
-    venue: 'Sede Club Carlos Muñoz',
-    status: 'Activa',
-    priority: 'normal',
-    attendees: 12,
-    maxAttendees: 15,
-  },
-  {
-    id: 4,
-    type: 'Entrenamiento',
-    title: 'Entrenamiento Físico - Cachavacha',
-    description: 'Sesión de preparación física y acondicionamiento general.',
-    club: 'Cachavacha',
-    date: '2024-01-19',
-    time: '18:30',
-    venue: 'Complejo Deportivo Cachavacha',
-    status: 'Confirmada',
-    priority: 'low',
-    attendees: 22,
-    maxAttendees: 25,
-  },
-  {
-    id: 5,
-    type: 'Convocatoria',
-    title: 'Citación Disciplinaria',
-    description: 'Reunión disciplinaria por incidentes en el último encuentro. Asistencia obligatoria.',
-    club: 'Cultural Renacer',
-    date: '2024-01-16',
-    time: '21:00',
-    venue: 'Oficinas AFC La Cisterna',
-    status: 'Urgente',
-    priority: 'high',
-    attendees: 5,
-    maxAttendees: 8,
-  },
-]
 
 const announcements = [
   {
@@ -95,6 +25,27 @@ const announcements = [
 ]
 
 export default function CitacionesPage() {
+  const [citaciones, setCitaciones] = useState<Citation[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    loadCitaciones()
+  }, [])
+
+  const loadCitaciones = async () => {
+    try {
+      setLoading(true)
+      const citacionesData = await citationService.getActive()
+      setCitaciones(citacionesData)
+    } catch (err) {
+      setError('Error al cargar las citaciones')
+      console.error('Error loading citations:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'high': return 'bg-red-100 text-red-800 border-red-200'
@@ -113,6 +64,19 @@ export default function CitacionesPage() {
     }
   }
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <Navbar />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center">
+            <div className="text-xl text-gray-600 dark:text-gray-400">Cargando citaciones...</div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Navbar />
@@ -128,6 +92,19 @@ export default function CitacionesPage() {
             No te pierdas ninguna citación oficial de tu club.
           </p>
         </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="mb-8 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+            <p className="text-red-800 dark:text-red-200">{error}</p>
+            <button 
+              onClick={loadCitaciones}
+              className="mt-2 text-red-600 dark:text-red-400 underline hover:no-underline"
+            >
+              Intentar de nuevo
+            </button>
+          </div>
+        )}
 
         {/* Important Announcements */}
         <div className="mb-12">
@@ -210,6 +187,11 @@ export default function CitacionesPage() {
             Citaciones Activas
           </h2>
           
+          {citaciones.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-gray-500 dark:text-gray-400">No hay citaciones activas en este momento.</p>
+            </div>
+          ) : (
           {citaciones.map((citacion) => (
             <Card key={citacion.id} className="hover:shadow-lg transition-shadow">
               <CardHeader>
@@ -235,7 +217,7 @@ export default function CitacionesPage() {
                   <div className="text-right">
                     <div className="flex items-center text-sm text-gray-500 mb-1">
                       <Users className="h-4 w-4 mr-1" />
-                      {citacion.attendees}/{citacion.maxAttendees}
+                      {citacion.attendees}/{citacion.max_attendees}
                     </div>
                     {citacion.status === 'Confirmada' && (
                       <CheckCircle className="h-5 w-5 text-green-600" />
@@ -277,16 +259,17 @@ export default function CitacionesPage() {
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div 
                       className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${(citacion.attendees / citacion.maxAttendees) * 100}%` }}
+                      style={{ width: `${(citacion.attendees / citacion.max_attendees) * 100}%` }}
                     ></div>
                   </div>
                   <span className="ml-3 text-xs text-gray-500">
-                    {Math.round((citacion.attendees / citacion.maxAttendees) * 100)}%
+                    {Math.round((citacion.attendees / citacion.max_attendees) * 100)}%
                   </span>
                 </div>
               </CardContent>
             </Card>
           ))}
+          )}
         </div>
 
         {/* Call to Action */}
@@ -310,4 +293,5 @@ export default function CitacionesPage() {
       </div>
     </div>
   )
+'use client'
 }
