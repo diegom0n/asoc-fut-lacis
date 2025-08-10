@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { Navbar } from '@/components/navbar'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -15,10 +17,19 @@ import { Alert, AlertDescription } from '@/components/ui/alert'
 import { matchService, newsService, citationService } from '@/lib/supabase-admin'
 
 export default function AdminPage() {
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState('matches')
   const [showSuccess, setShowSuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+
+  // Check authentication
+  useEffect(() => {
+    const token = localStorage.getItem('afc_admin_token')
+    if (!token || token !== 'authenticated') {
+      router.push('/auth/login')
+    }
+  }, [router])
 
   // Match Form State
   const [matchForm, setMatchForm] = useState({
@@ -211,6 +222,17 @@ export default function AdminPage() {
           <p className="text-xl text-gray-600 dark:text-gray-400">
             Gestiona partidos, noticias y citaciones de la asociación
           </p>
+          <div className="mt-4">
+            <button
+              onClick={() => {
+                localStorage.removeItem('afc_admin_token')
+                router.push('/')
+              }}
+              className="text-sm text-red-600 hover:text-red-800 underline"
+            >
+              Cerrar Sesión
+            </button>
+          </div>
         </div>
 
         {/* Success Alert */}

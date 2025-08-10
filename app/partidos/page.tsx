@@ -11,11 +11,9 @@ import { matchService, calculateStandings, type Match } from '@/lib/supabase-adm
 
 const categories = [
   'Todas las Categorías',
-  'Categoría 1',
-  'Categoría 2', 
-  'Categoría 3',
-  'Categoría 4',
-  'Categoría 5'
+  'Primera División',
+  'Segunda División', 
+  'Tercera División'
 ]
 
 export default function PartidosPage() {
@@ -55,7 +53,7 @@ export default function PartidosPage() {
     }
   }
 
-  const filterByCategory = (matches: any[]) => {
+  const filterByCategory = (matches: Match[]) => {
     if (selectedCategory === 'Todas las Categorías') {
       return matches
     }
@@ -139,54 +137,54 @@ export default function PartidosPage() {
                   <p className="text-gray-500 dark:text-gray-400">No hay partidos próximos programados.</p>
                 </div>
               ) : (
-              {filterByCategory(upcomingMatches).map((match) => (
-                <Card key={match.id} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <Badge variant="outline">{match.division}</Badge>
-                      {match.matchday && <Badge variant="secondary">{match.matchday}</Badge>}
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="text-center flex-1">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                          {match.home_team}
-                        </h3>
-                        <p className="text-sm text-gray-500">Local</p>
+                filterByCategory(upcomingMatches).map((match) => (
+                  <Card key={match.id} className="hover:shadow-lg transition-shadow">
+                    <CardHeader>
+                      <div className="flex items-center justify-between">
+                        <Badge variant="outline">{match.division}</Badge>
+                        {match.matchday && <Badge variant="secondary">{match.matchday}</Badge>}
                       </div>
-                      
-                      <div className="text-center px-4">
-                        <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                          VS
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="text-center flex-1">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                            {match.home_team}
+                          </h3>
+                          <p className="text-sm text-gray-500">Local</p>
+                        </div>
+                        
+                        <div className="text-center px-4">
+                          <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                            VS
+                          </div>
+                        </div>
+                        
+                        <div className="text-center flex-1">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                            {match.away_team}
+                          </h3>
+                          <p className="text-sm text-gray-500">Visitante</p>
                         </div>
                       </div>
                       
-                      <div className="text-center flex-1">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                          {match.away_team}
-                        </h3>
-                        <p className="text-sm text-gray-500">Visitante</p>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600 dark:text-gray-400">
+                        <div className="flex items-center justify-center">
+                          <Calendar className="h-4 w-4 mr-2" />
+                          {new Date(match.date).toLocaleDateString('es-CL')}
+                        </div>
+                        <div className="flex items-center justify-center">
+                          <Clock className="h-4 w-4 mr-2" />
+                          {match.time || 'Por confirmar'}
+                        </div>
+                        <div className="flex items-center justify-center">
+                          <MapPin className="h-4 w-4 mr-2" />
+                          {match.venue}
+                        </div>
                       </div>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600 dark:text-gray-400">
-                      <div className="flex items-center justify-center">
-                        <Calendar className="h-4 w-4 mr-2" />
-                        {new Date(match.date).toLocaleDateString('es-CL')}
-                      </div>
-                      <div className="flex items-center justify-center">
-                        <Clock className="h-4 w-4 mr-2" />
-                        {match.time || 'Por confirmar'}
-                      </div>
-                      <div className="flex items-center justify-center">
-                        <MapPin className="h-4 w-4 mr-2" />
-                        {match.venue}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                    </CardContent>
+                  </Card>
+                ))
               )}
             </div>
           </TabsContent>
@@ -199,46 +197,46 @@ export default function PartidosPage() {
                   <p className="text-gray-500 dark:text-gray-400">No hay resultados recientes disponibles.</p>
                 </div>
               ) : (
-              {filterByCategory(recentResults).map((result) => (
-                <Card key={result.id} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <Badge variant="outline">{result.division}</Badge>
-                      <Badge variant="secondary">
-                        {new Date(result.date).toLocaleDateString('es-CL')}
-                      </Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="text-center flex-1">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                          {result.home_team}
-                        </h3>
-                        <p className="text-sm text-gray-500">Local</p>
+                filterByCategory(recentResults).map((result) => (
+                  <Card key={result.id} className="hover:shadow-lg transition-shadow">
+                    <CardHeader>
+                      <div className="flex items-center justify-between">
+                        <Badge variant="outline">{result.division}</Badge>
+                        <Badge variant="secondary">
+                          {new Date(result.date).toLocaleDateString('es-CL')}
+                        </Badge>
                       </div>
-                      
-                      <div className="text-center px-6">
-                        <div className="text-3xl font-bold text-gray-900 dark:text-white">
-                          {result.home_score} - {result.away_score}
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="text-center flex-1">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                            {result.home_team}
+                          </h3>
+                          <p className="text-sm text-gray-500">Local</p>
+                        </div>
+                        
+                        <div className="text-center px-6">
+                          <div className="text-3xl font-bold text-gray-900 dark:text-white">
+                            {result.home_score} - {result.away_score}
+                          </div>
+                        </div>
+                        
+                        <div className="text-center flex-1">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                            {result.away_team}
+                          </h3>
+                          <p className="text-sm text-gray-500">Visitante</p>
                         </div>
                       </div>
                       
-                      <div className="text-center flex-1">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                          {result.away_team}
-                        </h3>
-                        <p className="text-sm text-gray-500">Visitante</p>
+                      <div className="flex items-center justify-center text-sm text-gray-600 dark:text-gray-400">
+                        <MapPin className="h-4 w-4 mr-2" />
+                        {result.venue}
                       </div>
-                    </div>
-                    
-                    <div className="flex items-center justify-center text-sm text-gray-600 dark:text-gray-400">
-                      <MapPin className="h-4 w-4 mr-2" />
-                      {result.venue}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                    </CardContent>
+                  </Card>
+                ))
               )}
             </div>
           </TabsContent>
@@ -264,54 +262,54 @@ export default function PartidosPage() {
                         </tr>
                       </tbody>
                     ) : (
-                    <>
-                    <thead>
-                      <tr className="border-b border-gray-200 dark:border-gray-700">
-                        <th className="text-left py-3 px-2 font-semibold text-gray-900 dark:text-white">#</th>
-                        <th className="text-left py-3 px-2 font-semibold text-gray-900 dark:text-white">Equipo</th>
-                        <th className="text-center py-3 px-2 font-semibold text-gray-900 dark:text-white">PJ</th>
-                        <th className="text-center py-3 px-2 font-semibold text-gray-900 dark:text-white">G</th>
-                        <th className="text-center py-3 px-2 font-semibold text-gray-900 dark:text-white">E</th>
-                        <th className="text-center py-3 px-2 font-semibold text-gray-900 dark:text-white">P</th>
-                        <th className="text-center py-3 px-2 font-semibold text-gray-900 dark:text-white">GF:GC</th>
-                        <th className="text-center py-3 px-2 font-semibold text-gray-900 dark:text-white">Pts</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {standings.map((team) => (
-                        <tr key={team.position} className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800">
-                          <td className="py-3 px-2">
-                            <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold ${
-                              team.position <= 3 ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                            }`}>
-                              {team.position}
-                            </span>
-                          </td>
-                          <td className="py-3 px-2 font-medium text-gray-900 dark:text-white">
-                            {team.team}
-                          </td>
-                          <td className="py-3 px-2 text-center text-gray-600 dark:text-gray-400">
-                            {team.played}
-                          </td>
-                          <td className="py-3 px-2 text-center text-green-600 dark:text-green-400">
-                            {team.won}
-                          </td>
-                          <td className="py-3 px-2 text-center text-yellow-600 dark:text-yellow-400">
-                            {team.drawn}
-                          </td>
-                          <td className="py-3 px-2 text-center text-red-600 dark:text-red-400">
-                            {team.lost}
-                          </td>
-                          <td className="py-3 px-2 text-center text-gray-600 dark:text-gray-400">
-                            {team.goals}
-                          </td>
-                          <td className="py-3 px-2 text-center font-bold text-blue-600 dark:text-blue-400">
-                            {team.points}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                    </>
+                      <>
+                        <thead>
+                          <tr className="border-b border-gray-200 dark:border-gray-700">
+                            <th className="text-left py-3 px-2 font-semibold text-gray-900 dark:text-white">#</th>
+                            <th className="text-left py-3 px-2 font-semibold text-gray-900 dark:text-white">Equipo</th>
+                            <th className="text-center py-3 px-2 font-semibold text-gray-900 dark:text-white">PJ</th>
+                            <th className="text-center py-3 px-2 font-semibold text-gray-900 dark:text-white">G</th>
+                            <th className="text-center py-3 px-2 font-semibold text-gray-900 dark:text-white">E</th>
+                            <th className="text-center py-3 px-2 font-semibold text-gray-900 dark:text-white">P</th>
+                            <th className="text-center py-3 px-2 font-semibold text-gray-900 dark:text-white">GF:GC</th>
+                            <th className="text-center py-3 px-2 font-semibold text-gray-900 dark:text-white">Pts</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {standings.map((team) => (
+                            <tr key={team.position} className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800">
+                              <td className="py-3 px-2">
+                                <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold ${
+                                  team.position <= 3 ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                                }`}>
+                                  {team.position}
+                                </span>
+                              </td>
+                              <td className="py-3 px-2 font-medium text-gray-900 dark:text-white">
+                                {team.team}
+                              </td>
+                              <td className="py-3 px-2 text-center text-gray-600 dark:text-gray-400">
+                                {team.played}
+                              </td>
+                              <td className="py-3 px-2 text-center text-green-600 dark:text-green-400">
+                                {team.won}
+                              </td>
+                              <td className="py-3 px-2 text-center text-yellow-600 dark:text-yellow-400">
+                                {team.drawn}
+                              </td>
+                              <td className="py-3 px-2 text-center text-red-600 dark:text-red-400">
+                                {team.lost}
+                              </td>
+                              <td className="py-3 px-2 text-center text-gray-600 dark:text-gray-400">
+                                {team.goals}
+                              </td>
+                              <td className="py-3 px-2 text-center font-bold text-blue-600 dark:text-blue-400">
+                                {team.points}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </>
                     )}
                   </table>
                 </div>

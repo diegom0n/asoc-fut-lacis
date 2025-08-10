@@ -1,11 +1,12 @@
-import { Navbar } from '@/components/navbar'
+'use client'
+
 import { useState, useEffect } from 'react'
+import { Navbar } from '@/components/navbar'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Calendar, Clock, MapPin, Users, Megaphone, AlertCircle, CheckCircle } from 'lucide-react'
 import { citationService, type Citation } from '@/lib/supabase-admin'
-
 
 const announcements = [
   {
@@ -192,83 +193,83 @@ export default function CitacionesPage() {
               <p className="text-gray-500 dark:text-gray-400">No hay citaciones activas en este momento.</p>
             </div>
           ) : (
-          {citaciones.map((citacion) => (
-            <Card key={citacion.id} className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-3 mb-2">
-                      <Badge variant={getStatusColor(citacion.status)}>
-                        {citacion.status}
-                      </Badge>
-                      <Badge variant="outline">
-                        {citacion.type}
-                      </Badge>
-                      <div className={`px-2 py-1 rounded-full text-xs font-medium ${getPriorityColor(citacion.priority)}`}>
-                        {citacion.priority === 'high' && 'Alta Prioridad'}
-                        {citacion.priority === 'normal' && 'Prioridad Normal'}
-                        {citacion.priority === 'low' && 'Baja Prioridad'}
+            citaciones.map((citacion) => (
+              <Card key={citacion.id} className="hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-3 mb-2">
+                        <Badge variant={getStatusColor(citacion.status)}>
+                          {citacion.status}
+                        </Badge>
+                        <Badge variant="outline">
+                          {citacion.type}
+                        </Badge>
+                        <div className={`px-2 py-1 rounded-full text-xs font-medium ${getPriorityColor(citacion.priority)}`}>
+                          {citacion.priority === 'high' && 'Alta Prioridad'}
+                          {citacion.priority === 'normal' && 'Prioridad Normal'}
+                          {citacion.priority === 'low' && 'Baja Prioridad'}
+                        </div>
                       </div>
+                      <CardTitle className="text-xl">{citacion.title}</CardTitle>
+                      <p className="text-sm text-gray-500 mt-1">{citacion.club}</p>
                     </div>
-                    <CardTitle className="text-xl">{citacion.title}</CardTitle>
-                    <p className="text-sm text-gray-500 mt-1">{citacion.club}</p>
-                  </div>
-                  
-                  <div className="text-right">
-                    <div className="flex items-center text-sm text-gray-500 mb-1">
-                      <Users className="h-4 w-4 mr-1" />
-                      {citacion.attendees}/{citacion.max_attendees}
+                    
+                    <div className="text-right">
+                      <div className="flex items-center text-sm text-gray-500 mb-1">
+                        <Users className="h-4 w-4 mr-1" />
+                        {citacion.attendees}/{citacion.max_attendees}
+                      </div>
+                      {citacion.status === 'Confirmada' && (
+                        <CheckCircle className="h-5 w-5 text-green-600" />
+                      )}
                     </div>
-                    {citacion.status === 'Confirmada' && (
-                      <CheckCircle className="h-5 w-5 text-green-600" />
-                    )}
                   </div>
-                </div>
-              </CardHeader>
-              
-              <CardContent>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">
-                  {citacion.description}
-                </p>
+                </CardHeader>
                 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                  <div className="flex items-center text-gray-600 dark:text-gray-400">
-                    <Calendar className="h-4 w-4 mr-2 text-blue-500" />
-                    <span>
-                      {new Date(citacion.date).toLocaleDateString('es-CL', {
-                        weekday: 'long',
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                      })}
+                <CardContent>
+                  <p className="text-gray-600 dark:text-gray-400 mb-4">
+                    {citacion.description}
+                  </p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div className="flex items-center text-gray-600 dark:text-gray-400">
+                      <Calendar className="h-4 w-4 mr-2 text-blue-500" />
+                      <span>
+                        {new Date(citacion.date).toLocaleDateString('es-CL', {
+                          weekday: 'long',
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
+                        })}
+                      </span>
+                    </div>
+                    
+                    <div className="flex items-center text-gray-600 dark:text-gray-400">
+                      <Clock className="h-4 w-4 mr-2 text-green-500" />
+                      <span>{citacion.time} hrs</span>
+                    </div>
+                    
+                    <div className="flex items-center text-gray-600 dark:text-gray-400">
+                      <MapPin className="h-4 w-4 mr-2 text-red-500" />
+                      <span>{citacion.venue}</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 flex justify-between items-center">
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div 
+                        className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                        style={{ width: `${(citacion.attendees / citacion.max_attendees) * 100}%` }}
+                      ></div>
+                    </div>
+                    <span className="ml-3 text-xs text-gray-500">
+                      {Math.round((citacion.attendees / citacion.max_attendees) * 100)}%
                     </span>
                   </div>
-                  
-                  <div className="flex items-center text-gray-600 dark:text-gray-400">
-                    <Clock className="h-4 w-4 mr-2 text-green-500" />
-                    <span>{citacion.time} hrs</span>
-                  </div>
-                  
-                  <div className="flex items-center text-gray-600 dark:text-gray-400">
-                    <MapPin className="h-4 w-4 mr-2 text-red-500" />
-                    <span>{citacion.venue}</span>
-                  </div>
-                </div>
-
-                <div className="mt-4 flex justify-between items-center">
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div 
-                      className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${(citacion.attendees / citacion.max_attendees) * 100}%` }}
-                    ></div>
-                  </div>
-                  <span className="ml-3 text-xs text-gray-500">
-                    {Math.round((citacion.attendees / citacion.max_attendees) * 100)}%
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            ))
           )}
         </div>
 
@@ -293,5 +294,4 @@ export default function CitacionesPage() {
       </div>
     </div>
   )
-'use client'
 }

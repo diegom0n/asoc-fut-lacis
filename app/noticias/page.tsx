@@ -1,5 +1,7 @@
-import { Navbar } from '@/components/navbar'
+'use client'
+
 import { useState, useEffect } from 'react'
+import { Navbar } from '@/components/navbar'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Calendar, User, Eye, MessageCircle } from 'lucide-react'
@@ -96,56 +98,56 @@ export default function NoticiasPage() {
 
         {/* Featured News */}
         {featuredNews.length > 0 && (
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-            Noticias Destacadas
-          </h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {featuredNews.slice(0, 2).map((article) => (
-              <Card key={article.id} className="hover:shadow-lg transition-shadow cursor-pointer group overflow-hidden">
-                <div className="aspect-video bg-gradient-to-r from-blue-500 to-blue-700"></div>
-                <CardHeader>
-                  <div className="flex items-center gap-2 mb-2">
-                    <Badge variant="secondary">{article.category}</Badge>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
-                      Destacada
-                    </span>
-                  </div>
-                  <CardTitle className="text-xl group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                    {article.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4">
-                    {article.summary}
-                  </p>
-                  <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                    <div className="flex items-center space-x-4">
-                      <div className="flex items-center">
-                        <User className="h-4 w-4 mr-1" />
-                        {article.author}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+              Noticias Destacadas
+            </h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {featuredNews.slice(0, 2).map((article) => (
+                <Card key={article.id} className="hover:shadow-lg transition-shadow cursor-pointer group overflow-hidden">
+                  <div className="aspect-video bg-gradient-to-r from-blue-500 to-blue-700"></div>
+                  <CardHeader>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge variant="secondary">{article.category}</Badge>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                        Destacada
+                      </span>
+                    </div>
+                    <CardTitle className="text-xl group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                      {article.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 dark:text-gray-400 mb-4">
+                      {article.summary}
+                    </p>
+                    <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                      <div className="flex items-center space-x-4">
+                        <div className="flex items-center">
+                          <User className="h-4 w-4 mr-1" />
+                          {article.author}
+                        </div>
+                        <div className="flex items-center">
+                          <Calendar className="h-4 w-4 mr-1" />
+                          {new Date(article.date).toLocaleDateString('es-CL')}
+                        </div>
                       </div>
-                      <div className="flex items-center">
-                        <Calendar className="h-4 w-4 mr-1" />
-                        {new Date(article.date).toLocaleDateString('es-CL')}
+                      <div className="flex items-center space-x-3">
+                        <div className="flex items-center">
+                          <Eye className="h-4 w-4 mr-1" />
+                          {article.views}
+                        </div>
+                        <div className="flex items-center">
+                          <MessageCircle className="h-4 w-4 mr-1" />
+                          {article.comments}
+                        </div>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-3">
-                      <div className="flex items-center">
-                        <Eye className="h-4 w-4 mr-1" />
-                        {article.views}
-                      </div>
-                      <div className="flex items-center">
-                        <MessageCircle className="h-4 w-4 mr-1" />
-                        {article.comments}
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
-        </div>
         )}
 
         {/* All News */}
@@ -163,61 +165,60 @@ export default function NoticiasPage() {
               </p>
             </div>
           ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredNews.map((article) => (
-              <Card key={article.id} className="hover:shadow-lg transition-shadow cursor-pointer group">
-                <div className="aspect-video bg-gradient-to-r from-gray-400 to-gray-600"></div>
-                <CardHeader>
-                  <Badge variant="outline" className="w-fit">
-                    {article.category}
-                  </Badge>
-                  <CardTitle className="text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                    {article.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3">
-                    {article.summary}
-                  </p>
-                  <div className="space-y-2 text-xs text-gray-500 dark:text-gray-400">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <User className="h-3 w-3 mr-1" />
-                        {article.author}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredNews.map((article) => (
+                <Card key={article.id} className="hover:shadow-lg transition-shadow cursor-pointer group">
+                  <div className="aspect-video bg-gradient-to-r from-gray-400 to-gray-600"></div>
+                  <CardHeader>
+                    <Badge variant="outline" className="w-fit">
+                      {article.category}
+                    </Badge>
+                    <CardTitle className="text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                      {article.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3">
+                      {article.summary}
+                    </p>
+                    <div className="space-y-2 text-xs text-gray-500 dark:text-gray-400">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <User className="h-3 w-3 mr-1" />
+                          {article.author}
+                        </div>
+                        <div className="flex items-center">
+                          <Calendar className="h-3 w-3 mr-1" />
+                          {new Date(article.date).toLocaleDateString('es-CL')}
+                        </div>
                       </div>
-                      <div className="flex items-center">
-                        <Calendar className="h-3 w-3 mr-1" />
-                        {new Date(article.date).toLocaleDateString('es-CL')}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <Eye className="h-3 w-3 mr-1" />
+                          {article.views} vistas
+                        </div>
+                        <div className="flex items-center">
+                          <MessageCircle className="h-3 w-3 mr-1" />
+                          {article.comments} comentarios
+                        </div>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <Eye className="h-3 w-3 mr-1" />
-                        {article.views} vistas
-                      </div>
-                      <div className="flex items-center">
-                        <MessageCircle className="h-3 w-3 mr-1" />
-                        {article.comments} comentarios
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           )}
         </div>
 
         {/* Load More */}
         {filteredNews.length > 0 && (
-        <div className="text-center mt-12">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">
-            Cargar Más Noticias
-          </button>
-        </div>
+          <div className="text-center mt-12">
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">
+              Cargar Más Noticias
+            </button>
+          </div>
         )}
       </div>
     </div>
   )
-'use client'
 }
