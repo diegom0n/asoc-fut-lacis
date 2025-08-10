@@ -13,6 +13,7 @@ const navItems = [
   { href: '/noticias', label: 'Noticias' },
   { href: '/partidos', label: 'Partidos' },
   { href: '/citaciones', label: 'Citaciones' },
+  { href: '/contacto', label: 'Contacto' },
 ]
 
 export function Navbar() {

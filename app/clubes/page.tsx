@@ -3,6 +3,7 @@ import { Navbar } from '@/components/navbar'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Users, MapPin, Trophy, Calendar } from 'lucide-react'
+import Link from 'next/link'
 
 const clubs = [
   {
@@ -16,6 +17,7 @@ const clubs = [
     colors: 'bg-white border-brand-neutral-900',
     logo: '/logos/clubs/américa.jpg',
     member: 2025,
+    slug: 'america',
   },
   {
     id: 2,
@@ -28,6 +30,7 @@ const clubs = [
     colors: 'bg-brand-neutral-900',
     logo: '/logos/clubs/american.jpg',
     member: 2025,
+    slug: 'cd-american',
   },
   {
     id: 3,
@@ -40,6 +43,7 @@ const clubs = [
     colors: 'bg-brand-neutral-100',
     logo: '/logos/clubs/carlos muñoz.jpg',
     member: 2025,
+    slug: 'carlos-munoz',
   },
   {
     id: 4,
@@ -52,6 +56,7 @@ const clubs = [
     colors: 'bg-blue-500',
     logo: '/logos/clubs/cachavacha.jpg',
     member: 2025,
+    slug: 'cachavacha',
   },
   {
     id: 5,
@@ -64,6 +69,7 @@ const clubs = [
     colors: 'bg-brand-neutral-900',
     logo: '/logos/clubs/renacer.jpg',
     member: 2025,
+    slug: 'cultural-renacer',
   },
   {
     id: 6,
@@ -76,6 +82,7 @@ const clubs = [
     colors: 'bg-cyan-500',
     logo: '/logos/clubs/uruguay.png',
     member: 2025,
+    slug: 'cultural-uruguay',
   },
   {
     id: 7,
@@ -88,6 +95,7 @@ const clubs = [
     colors: 'bg-brand-neutral-900',
     logo: '/logos/clubs/fc la burgueño.jpg',
     member: 2025,
+    slug: 'fc-la-burgueno',
   },
   {
     id: 8,
@@ -100,6 +108,7 @@ const clubs = [
     colors: 'bg-brand-neutral-900',
     logo: '/logos/clubs/gremio.jpg',
     member: 2025,
+    slug: 'gremio',
   },
   {
     id: 9,
@@ -112,6 +121,7 @@ const clubs = [
     colors: 'bg-brand-neutral-900',
     logo: '/logos/clubs/gremio 2010.jpg',
     member: 2025,
+    slug: 'gremio-2010',
   },
   {
     id: 10,
@@ -124,6 +134,7 @@ const clubs = [
     colors: 'bg-brand-secondary-400',
     logo: '/logos/clubs/juventud brasil.jpg',
     member: 2025,
+    slug: 'juventud-brasil',
   },
   {
     id: 11,
@@ -136,6 +147,7 @@ const clubs = [
     colors: 'bg-brand-neutral-900',
     logo: '/logos/clubs/real lo espejo.jpg',
     member: 2025,
+    slug: 'real-lo-espejo',
   },
   {
     id: 12,
@@ -148,6 +160,7 @@ const clubs = [
     colors: 'bg-brand-neutral-900',
     logo: '/logos/clubs/unión salas.jpg',
     member: 2025,
+    slug: 'union-salas',
   },
 ]
 
@@ -218,7 +231,8 @@ export default function ClubesPage() {
         {/* Clubs Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {clubs.map((club) => (
-            <Card key={club.id} className="hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
+            <Link key={club.id} href={`/clubes/${club.slug}`}>
+              <Card className="hover:shadow-lg transition-all duration-200 hover:-translate-y-1 cursor-pointer">
               <CardHeader className="relative">
                 <div className="flex items-center space-x-4">
                   <div className={`w-16 h-16 ${club.colors} rounded-full flex items-center justify-center relative overflow-hidden`}>
@@ -277,7 +291,8 @@ export default function ClubesPage() {
                   </div>
                 </div>
               </CardContent>
-            </Card>
+              </Card>
+            </Link>
           ))}
         </div>
 
