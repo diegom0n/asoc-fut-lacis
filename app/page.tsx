@@ -11,26 +11,26 @@ export default function Home() {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-brand-primary-600 to-brand-primary-800 text-white">
+      <section className="bg-gradient-to-r from-brand-primary-400 to-brand-primary-600 dark:bg-gradient-to-r dark:from-brand-primary-500 dark:to-brand-primary-800 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <h1 className="text-brand-neutral-50 text-4xl md:text-6xl font-bold mb-6">
               Asociación Fútbol
-              <span className="block text-brand-secondary-400">La Cisterna</span>
+              <span className="block text-brand-secondary-300 dark:text-brand-secondary-400">La Cisterna</span>
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
-              Unidos por la pasión del fútbol en La Cisterna, Chile. 
-              Promoviendo el deporte y los valores en nuestra comunidad.
+            <p className="text-xl md:text-2xl mb-8 text-brand-neutral-50 max-w-3xl mx-auto">
+              Unidos por la pasión del fútbol en La Cisterna dese 1929. 
+              Promoviendo el deporte y los valores en nuestra comuna.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-brand-secondary-500 hover:bg-brand-secondary-600 text-black font-semibold">
+              <Button size="lg" className="bg-brand-secondary-300 hover:bg-brand-secondary-600 dark:bg-brand-secondary-600 dark:hover:bg-brand-secondary-800 dark:text-brand-neutral-50 dark:hover:text-brand-neutral-200 text-black font-semibold">
                 Ver Próximos Partidos
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="border-white text-brand-primary-600 hover:bg-brand-primary-600 hover:text-white dark:border-brand-neutral-900 dark:text-white dark:hover:bg-brand-neutral-400 dark:hover:text-brand-neutral-900"
+                className="border-white text-brand-primary-600 hover:bg-brand-primary-400 hover:text-white dark:bg-brand-primary-500 dark:border-brand-neutral-900 dark:text-white dark:hover:bg-brand-primary-800 dark:hover:text-brand-neutral-200"
               >
                 Conocer Clubes
               </Button>
@@ -44,7 +44,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-center">
             <div>
-              <div className="text-3xl font-bold text-brand-primary-600 dark:text-brand-primary-400">12</div>
+              <div className="text-3xl font-bold text-brand-warning-600 dark:text-brand-warning-400">12</div>
               <div className="text-gray-600 dark:text-gray-400">Clubes Afiliados</div>
             </div>
             <div>
@@ -52,7 +52,7 @@ export default function Home() {
               <div className="text-gray-600 dark:text-gray-400">Partidos Jugados</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-brand-warning-600 dark:text-brand-warning-400">8</div>
+              <div className="text-3xl font-bold text-brand-primary-600 dark:text-brand-primary-400">96</div>
               <div className="text-gray-600 dark:text-gray-400">Años de Historia</div>
             </div>
           </div>
@@ -157,7 +157,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[1, 2, 3].map((i) => (
               <Card key={i} className="group transform transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-xl cursor-pointer">
-                <div className="aspect-video bg-gradient-to-r from-blue-400 to-blue-600 rounded-t-lg"></div>
+                <div className="aspect-video bg-gradient-to-r from-brand-primary-400 to-brand-secondary-600 rounded-t-lg"></div>
                 <CardHeader>
                   <CardTitle className="text-lg">
                     Gran victoria del Cultural Uruguay

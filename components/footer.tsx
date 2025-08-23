@@ -7,7 +7,6 @@ export default function Footer() {
     <footer className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 py-12 border-t border-gray-200 dark:border-gray-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Logo y nombre de la asociación */}
         <div className="text-center mb-8">
           <div className="flex justify-center items-center space-x-3 mb-4">
           <Image
@@ -22,14 +21,12 @@ export default function Footer() {
             </h3>
           </div>
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            Promoviendo el fútbol y los valores deportivos en nuestra comunidad
+            Promoviendo el fútbol y los valores deportivos en nuestra comuna.
           </p>
         </div>
 
-        {/* Imágenes de patrocinadores */}
         <div className="flex justify-center items-center flex-wrap gap-6 mb-8">
             <h1>Patrocinadores:</h1>
-          {/* Puedes duplicar esto con distintas imágenes */}
           <Link
             href="https://www.gobiernosantiago.cl/"
             target="_blank"
@@ -60,7 +57,6 @@ export default function Footer() {
           </Link>
         </div>
 
-        {/* Botones de redes sociales */}
         <div className="flex justify-center space-x-6 mb-6">
           <a
             href="https://www.facebook.com/asociaciondefutbollacisterna"

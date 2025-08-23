@@ -26,7 +26,7 @@ export default function AdminPage() {
   useEffect(() => {
     const token = localStorage.getItem('afc_admin_token')
     if (!token || token !== 'authenticated') {
-      router.push('/auth/login')
+      router.push('/login')
     }
   }, [router])
 

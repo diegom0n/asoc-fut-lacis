@@ -7,13 +7,13 @@ import Footer from '@/components/footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Asociación Fútbol La Cisterna',
-  description: 'Sitio oficial de la Asociación Fútbol La Cisterna - Noticias, clubes, partidos y más',
-  keywords: 'fútbol, La Cisterna, Chile, asociación, partidos, clubes, noticias',
-  authors: [{ name: 'Asociación Fútbol La Cisterna' }],
+  title: 'Asociación de Fútbol La Cisterna',
+  description: 'Sitio oficial de la Asociación de Fútbol La Cisterna - Noticias, clubes, partidos y más',
+  keywords: 'fútbol, La Cisterna, Santiago, Chile, ANFA, asociación, partidos, clubes, noticias, amateur',
+  authors: [{ name: 'Asociación de Fútbol La Cisterna' }],
   openGraph: {
-    title: 'Asociación Fútbol La Cisterna',
-    description: 'Sitio oficial de la Asociación Fútbol La Cisterna',
+    title: 'Asociación de Fútbol La Cisterna',
+    description: 'Sitio oficial de la Asociación de Fútbol La Cisterna',
     type: 'website',
     locale: 'es_CL',
   },
